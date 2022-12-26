@@ -31,7 +31,17 @@ public class RealEstateBO {
 	public List<RealEstate> getRealEstateListByAreaPrice(int area, int price) {
 		return realEstateDAO.selectRealEstateListByAreaPrice(area, price);
 	}
+	
+	// input: RealEstate
+	// output: int(성공한 행의 개수)
+	public int addRealEstate(RealEstate realEstate) {
+		return realEstateDAO.insertRealEstate(realEstate);
+	}
 }
+
+
+
+
 
 
 

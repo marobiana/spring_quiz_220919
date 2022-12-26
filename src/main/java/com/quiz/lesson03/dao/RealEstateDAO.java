@@ -18,6 +18,8 @@ public interface RealEstateDAO {
 			// @Param 어노테이션에 의해서 하나의 맵이 된 것
 			@Param("area") int area, 
 			@Param("price") int price);
+	
+	public int insertRealEstate(RealEstate realEstate);
 }
 
 
