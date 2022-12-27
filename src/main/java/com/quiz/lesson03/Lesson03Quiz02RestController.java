@@ -48,6 +48,26 @@ public class Lesson03Quiz02RestController {
 				realtorId, "썅떼빌리버 오피스텔 814호", 45, "월세", 100000, 120);
 	}
 	
+	// http://localhost:8080/lesson03/quiz03/1?id=8&type=전세&price=70000
+	@RequestMapping("/lesson03/quiz03/1")
+	public String quiz03_1(
+			@RequestParam("id") int id,
+			@RequestParam("type") String type,
+			@RequestParam("price") int price) {
+		
+		int row = realEstateBO.updateRealEstateById(id, type, price);
+		return "수정 성공:" + row;
+	}
+	
+	// http://localhost:8080/lesson03/quiz04/1?id=21
+	@RequestMapping("/lesson03/quiz04/1")
+	public String quiz04(
+			@RequestParam("id") int id) {
+		
+		realEstateBO.deleteRealEstateById(id);
+		return "삭제 성공";
+	}
+	
 }
 
 
