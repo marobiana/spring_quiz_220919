@@ -133,5 +133,21 @@
 			</div>
 		</footer>
 	</div>
+	
+	<script>
+		$(document).ready(function() {
+			$('input[name=date]').datepicker({
+				dateFormat: "yy-mm-dd"
+			});
+		});
+	</script>
 </body>
 </html>
+
+
+
+
+
+
+
+
