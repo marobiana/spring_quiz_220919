@@ -58,6 +58,24 @@ public class Lesson06Controller {
 		return "lesson06/quiz01/afterAddFavorite";
 	}
 	
+	// 중복확인 - AJAX 통신 요청
+	@ResponseBody
+	@PostMapping("/quiz02/is_duplication_url")
+	public Map<String, Boolean> isDuplicationUrl(
+			@RequestParam("url") String url) {
+		
+		Map<String, Boolean> result = new HashMap<>();
+		// 중복확인 select
+		Favorite favorite = favoriteBO.getFavoriteByUrl(url);
+		if (favorite != null) {
+			// 중복
+			result.put("is_duplication", true);
+		} else {
+			result.put("is_duplication", false);
+		}
+		
+		return result;
+	}
 }
 
 

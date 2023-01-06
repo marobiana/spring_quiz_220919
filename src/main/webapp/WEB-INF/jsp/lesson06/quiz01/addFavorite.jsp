@@ -34,7 +34,12 @@
 
 		<div class="form-group">
 			<label for="url">URL 주소</label>
-			<input type="text" id="url" class="form-control">
+			<div class="form-inline">
+				<input type="text" id="url" class="form-control col-10">
+				<button type="button" id="checkBtn" class="btn btn-info">중복확인</button>
+			</div>
+			<small id="duplicationText" class="text-danger d-none">중복된 URL 입니다.</small>
+			<small id="avaliableText" class="text-success d-none">저장 가능한 URL 입니다.</small>
 		</div>
 		
 		<button type="button" id="addFavoriteBtn" class="btn btn-success btn-block">추가</button>
@@ -81,7 +86,50 @@
 					}
 				});
 			});
+			
+			// 중복확인
+			$("#checkBtn").on('click', function() {
+				let url = $('#url').val().trim();
+				
+				if (url == '') {
+					alert("주소를 입력하세요");
+					return;
+				}
+				
+				// http로 시작하지도 않고, https로도 시작하지 않으면 alert
+				if (url.startsWith('http') == false && url.startsWith("https") == false) {
+					alert("주소 형식이 잘못되었습니다.");
+					return;
+				}
+				
+				// ajax -> 디비 확인
+				$.ajax({
+					// request
+					type:"post"
+					, url:"/lesson06/quiz02/is_duplication_url"
+					, data:{"url":url}
+					
+					// response
+					, success:function(data) {
+						if (data.is_duplication) {
+							// 중복 
+							$('#avaliableText').addClass('d-none');
+							$('#duplicationText').removeClass("d-none");
+						} else {
+							// 사용 가능한 URL
+							$('#duplicationText').addClass("d-none");
+							$('#avaliableText').removeClass('d-none');
+						}
+					}
+					, error:function(e) {
+						alert("에러 " + e);
+					}
+				});
+			});
 		});
 	</script>
 </body>
 </html>
+
+
+
