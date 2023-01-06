@@ -19,7 +19,7 @@
 <body>
 	<div id="wrap" class="container">
 		<header class="d-flex justify-content-center align-items-center">
-			<div class="display-4">통나무 팬션</div>
+			<div class="display-4">통나무 펜션</div>
 		</header>
 		<nav>
 			<ul class="nav nav-fill">
@@ -34,9 +34,7 @@
 			</ul>
 		</nav>
 		<section class="banner bg-info">
-			<img id="bannerImage"
-				src="http://marondal.com/material/images/dulumary/web/front/jquery/test06_banner1.jpg"
-				alt="banner" width="1110" height="500">
+			<img id="bannerImage" src="/img/booking/test06_banner1.jpg" alt="banner" width="1110" height="500">
 		</section>
 		<section class="reserve bg-primary d-flex">
 			<section
