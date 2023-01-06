@@ -32,6 +32,10 @@ public class FavoriteBO {
 		// 비어있는 경우
 		return null;
 	}
+	
+	public int deleteFavoriteById(int id) {
+		return favoriteDAO.deleteFavoriteById(id);
+	}
 }
 
 

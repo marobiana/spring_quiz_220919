@@ -7,6 +7,7 @@ import java.util.Map;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -72,6 +73,28 @@ public class Lesson06Controller {
 			result.put("is_duplication", true);
 		} else {
 			result.put("is_duplication", false);
+		}
+		
+		return result;
+	}
+	
+	// AJAX 요청 
+	@ResponseBody
+	@DeleteMapping("/quiz02/delete_favorite")
+	public Map<String, Object> deleteFavorite(
+			@RequestParam("id") int id) {
+		
+		Map<String, Object> result = new HashMap<>();
+		
+		// db delete
+		int row = favoriteBO.deleteFavoriteById(id);
+		if (row > 0) {
+			result.put("code", 1); // 성공
+			result.put("result", "성공");
+		} else {
+			result.put("code", 500); // 실패
+			result.put("result", "실패");
+			result.put("error_message", "삭제된 행이 없습니다.");
 		}
 		
 		return result;
