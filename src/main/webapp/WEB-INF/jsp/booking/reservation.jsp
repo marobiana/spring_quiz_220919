@@ -13,6 +13,9 @@
 	<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
 	<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
 
+	<link rel="stylesheet" href="http://code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
+    <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
+
  	<!-- stylesheet -->
 	<link rel="stylesheet" type="text/css" href="/css/booking/style.css">
 </head>
@@ -64,5 +67,67 @@
 			</small>
 		</footer>
 	</div>
+	
+	<script>
+		$(document).ready(function() {
+			$("input[name=date]").datepicker({
+				dateFormat:"yy-mm-dd"
+				, minDate:0   // 오늘부터 그 뒤 선택
+			});
+			
+			// 예약하기 버튼
+			$('#reservationBtn').on("click", function() {
+				let name = $('input[name=name]').val().trim();
+				let date = $('input[name=date]').val().trim();
+				let day = $('input[name=day]').val().trim();
+				let headcount = $('input[name=headcount]').val().trim();
+				let phoneNumber = $('input[name=phoneNumber]').val().trim();
+				
+				if (name == "") {
+					alert("이름을 입력하세요");
+					return;
+				}
+				
+				if (date == "") {
+					alert("날짜를 선택해주세요");
+					return;
+				}
+				
+				if (day == "") {
+					alert("숙박일을 선택하세요");
+					return;
+				}
+				
+				if (headcount == "") {
+					alert("숙박인원을 입력하세요");
+					return;
+				}
+				
+				if (phoneNumber == "") {
+					alert("전화번호를 입력하세요");
+					return;
+				}
+				
+				// ajax insert
+				$.ajax({
+					// request
+					type:"POST"
+					, url:"/booking/add_booking"
+					, data:{"name":name, "date":date, "day":day, "headcount":headcount, "phoneNumber":phoneNumber}
+					
+					// response
+					, success:function(data) {
+						if (data.result == "성공") {
+							alert("예약 되었습니다.");
+							location.href = "/booking/booking_list_view"; // 목록 화면으로 이동
+						}
+					}
+					, error:function(e) {
+						alert("예약하는데 실패했습니다.");
+					}
+				});
+			});
+		});
+	</script>
 </body>
 </html>

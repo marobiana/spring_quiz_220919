@@ -62,7 +62,7 @@
 	
 					<!-- 버튼 -->
 					<div class="text-right mt-3 mr-3">
-						<button type="button" class="btn btn-success submit-btn">조회하기</button>
+						<button type="button" id="searchBtn" class="btn btn-success submit-btn">조회하기</button>
 					</div>
 				</div>
 			</section>
@@ -84,5 +84,53 @@
 			</small>
 		</footer>
 	</div>
+	
+	<script>
+		$(document).ready(function() {
+			$('#searchBtn').on('click', function() {
+				let name = $('#name').val().trim();
+				let phoneNumber = $('#phoneNumber').val().trim();
+				
+				if (name == '') {
+					alert("이름을 입력하세요");
+					return;
+				}
+				
+				if (phoneNumber == "") {
+					alert("번호를 입력하세요");
+					return;
+				}
+				
+				// ajax
+				$.ajax({
+					// request
+					type:"post"
+					, url:"/booking/get_booking"
+					, data:{"name":name, "phoneNumber":phoneNumber}
+					
+					// response
+					, success:function(data) {
+						if (data.code == 1) { // 조회된 내역 있을 때
+							let message = "이름:" + data.booking.name 
+							+ "\n날짜:" + data.booking.date.slice(0, 10)   // 2023-01-10    0, 10 
+							+ "\n일수:" + data.booking.day
+							+ "\n인원:" + data.booking.headcount
+							+ "\n상태:" + data.booking.state;
+							alert(message);
+						} else { // 조회된 내역 없을 때 또는 에러 상황
+							alert("예약 내역이 없습니다.");
+						}
+					}
+					, error:function(e) {
+						alert("조회에 실패했습니다.");
+					}
+				});
+			});
+		});
+	</script>
 </body>
 </html>
+
+
+
+
